@@ -1,3 +1,6 @@
+
+;var wrapObjectFunction;
+
 (function () {
 	
 	var WWF = {};
@@ -192,7 +195,7 @@
 		' elps:' + this.elps + ' ms';
 	};
 	
-	this.wrapObj = function (obj, trolls, limit) {
+	wrapObjectFunction.wrapObj = function (obj, trolls, limit) {
 		
 		if (trolls && trolls.length) {
 			
