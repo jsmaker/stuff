@@ -1,5 +1,4 @@
-
-;var wrapObjectFunction;
+;var wrapObjectFunctions;
 
 (function () {
 	
@@ -195,7 +194,7 @@
 		' elps:' + this.elps + ' ms';
 	};
 	
-	wrapObjectFunction.wrapObj = function (obj, trolls, limit) {
+	wrapObjectFunctions = function (obj, trolls, limit) {
 		
 		if (trolls && trolls.length) {
 			
