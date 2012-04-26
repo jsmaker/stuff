@@ -31,7 +31,7 @@
 	
 	fnWrap.addData = function (dataKeeper) {
 	
-		var i = dataKeeper.id,
+		var i = dataKeeper.id;
 		
 		this.calls[i] = dataKeeper.calls;
 		
