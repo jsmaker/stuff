@@ -1,33 +1,39 @@
 //logs functions call
-
-;var wrapObjectFunctions;
-
-(function () {
+function wOF() {
 	
-	var WWF = {};
+	if (this === window) { return new wOF(); }
 	
-	WWF.fn = Wrap;
+	var WWF = {
+		
+		fn: Wrap,
+		
+		trollRegDef: [/^_?g|set\w/i],
+		
+		trollReg: [],
+		
+		visited: [],
+		
+		functions: [],
+		
+		functionsPropNames: [],
+		
+		time: 1
+		
+	};
 	
-	WWF.trollReg = [/^_?g|set\w/i, /^_?qwe/i];
+	var fnWrap = {
+		
+		active: true,
+		
+		calls: [],
+		
+		maxDataMem: 200,
+		
+		data: []
 	
-	WWF.visited = [];
+	};
 	
-	WWF.functions = [];
-	
-	WWF.functionsPropNames = [];
-	
-	WWF.time = 1;
-	
-	
-	var fnWrap = {};
-	
-	fnWrap.active = true;
-	
-	fnWrap.calls = [];
-	
-	fnWrap.maxDataMem = 200;
-	
-	fnWrap.data = [];
+	WWF.data = fnWrap;
 	
 	fnWrap.addData = function (dataKeeper) {
 	
@@ -76,19 +82,27 @@
 				
 				calls = (+fnWrap.calls[iOf] + 1) || 0,
 				
-				data = new DataKeeper(propName, iOf, calls, elps, arguments, this);
+				data = new DataKeeper(propName, originalFn, iOf, calls, elps, arguments, this);
 				
 				fnWrap.addData(data);
 				
-				if (elps > 0) {
+				if (elps > 0 && elps < 30) {
+				
 					console.log(data.toString(), arguments, this);
+					
+				} else if (elps >= 30) {
+					console.log('********Long Function*********');
+					console.warn(data.toString(), arguments, this);
+					console.log('******************************');
+				
 				}
 				
 				return returnValue;
 				
 			} else {
-				console.log('Not Active', fnWrap.calls);
-				return fn.apply(this, arguments);
+
+				return  o.fn.apply(this, arguments);
+				
 			}
 			
 		};
@@ -152,6 +166,7 @@
 		}
 	}
 	
+	
 	function testAllReg(p) {
 		
 		for (var i = 0, j = WWF.trollReg.length; i < j; i += 1) {
@@ -168,6 +183,7 @@
 		
 	}
 	
+	
 	function stopper() {
 		
 		var start = (+new Date());
@@ -180,9 +196,11 @@
 		
 	}
 	
-	function DataKeeper(name, id, calls, elps, data, obj) {
+	
+	function DataKeeper(name, originalFn, id, calls, elps, data, obj) {
 		this.obj = obj;
 		this.data = data;
+		this.originalFn = originalFn;
 		this.name = name;
 		this.id = id;
 		this.calls = calls;
@@ -196,18 +214,49 @@
 		' elps:' + this.elps + ' ms';
 	};
 	
-	wrapObjectFunctions = function (obj, trolls, limit) {
+	
+	var w_O_F = function (obj, trolls, limit) {
 		
 		if (trolls && trolls.length) {
-			
-			WWF.trollReg.push.apply(WWF.trollReg, trolls);
+		
+		}
+	
+		WWF.trollReg = ([].concat(WWF.trollRegDef, trolls));
+		
+		/* WWF.trollReg.push.apply(WWF.trollReg, trolls); */
+		
+		
+		if (obj && !(obj instanceof Array)) {
+		
+			obj = [obj];
 			
 		}
 		
-		wrapAll(obj, limit || 1000, 0);
+		for (var i = 0, j = obj.length; i < j; i += 1) {
+			
+			wrapAll(obj[i], limit || 1000, 0);
+			
+		}
+		
+		w_O_F.data = WWF;
 		
 		return WWF;
 		
 	};
 	
-}());
+	w_O_F.active = function(active){
+	
+		if (active === false || active === null) {
+		
+			return (fnWrap.active = false);
+			
+		}
+		
+		return (fnWrap.active = true);
+	};
+	
+	return w_O_F;
+	
+};
+
+var wof = wOF();
