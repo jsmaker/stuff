@@ -1,0 +1,60 @@
+#Templates{
+    display:none;
+}
+.msgs, .friends, .reports, .setting, .user{
+    overflow:hidden;
+}
+ul{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+li{
+    clear:both;
+}
+.msg, .friend, .report{
+   background: #aaa;
+   float:left;
+   min-width: 300px;
+   padding:1%;
+   margin:1%;    
+   width:29%;
+}
+
+.msg .msg, .friend .friend, .report .report{
+   min-width: 150px;
+}
+
+* {
+	margin:0;
+	padding:0;
+
+}
+
+.page{
+	/* width:960px; */
+	/* min-width:960px; */
+	margin:0 auto;
+}
+
+.bobmba{
+	background:rgba(0,0,0,0.1);
+}
+
+.oh,.ot,.tt,.oq{float:left;padding:1%;width:48%}
+.oq{width:23%}
+.ot{width:31%}
+.tt{width:65%}
+.cl{clear:both}
+.of{overflow:hidden}
+
+.page{background:#f3f3f3;}
+.header{background:#999999;}
+.sidebar{background:#dddddd;} 
+.nav{background:#aaaaaa;}
+.footer{background:#cccccc;}
+article{background:#aaaaaa;margin:0 1px 1px 0;min-height:200px;}
+/* .main{background:#777777;}
+*/
+​

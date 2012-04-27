@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+	
+<script type="text/template" id="Templates" >
+	
+    <div id="_users">
+		<div class="user"><h2>User</h2>${user}</div>      
+    </div>
+	
+    <div id="_user">
+		<div class="user"><h3>Details</h3>${this:friends}</div>  
+        <div class="friends"><h3>friends</h3>${friends}</div>        
+        <div class="msgs"><h3>msgs</h3>${msgs}</div>
+        <div class="reports"><h3>reports</h3>${reports}</div>
+        <div class="accountSetting">${accountSetting}</div>
+        <div class="profileWidgets">${profileWidgets}</div>  
+    </div>
+
+    <div id="_friends">
+        <ul class="friend">
+            <li>onlineStatus: ${onlineStatus}</li>
+            <li>${pic}</li>  
+            <li>name: ${name:-b}</li>  
+            <li>nick: ${nick:-b}</li>  
+            <li>age: ${age}</li>                  
+            <li>status: ${status}</li>
+        </ul>
+    </div>
+
+    <div id="_Qustion">
+        <h4>Qustion</h4>
+        <ul class="qustion">
+            <li>isAnswerd: ${isAnswerd}</li>
+            <li>answer: ${answer}</li>  
+            <li>Qustion: ${q}</li>  
+        </ul>
+    </div>
+    
+    <div id="_msgs">
+        <div class="msg">
+            <h4>${from}</h4>
+            <p>${txt}</p>      
+        </div>
+    </div>
+    
+    <div id="_reports">
+        <div class="report">
+            <h4>on: ${on}</h4>
+            <p>timeToFade: ${timeToFade}</p>
+            <p>from: ${from}</p>      
+            <p>mgs: ${mgs}</p>              
+        </div>
+    </div>
+    
+    <div id="_accountSetting">
+        <ul class="setting">
+             <li>id: ${userID}</li>   
+             <li><h4>privecy:</h4> ${privecy}</li>
+             <li><h4>invitedBy:</h4> ${invitedBy:friends}</li>
+             <li><h4>invetedFriends:</h4> ${invetedFriends:friends}</li>
+             <li><h4>iDontWantToSee:</h4> ${iDontWantToSee:friends}</li>
+             <li><h4>invisibleTo:</h4> ${invisibleTo:friends}</li>
+        </ul>
+    </div>
+    
+	<div id="_pic">
+        <img${} src="${url}" alt="${title}">                
+    </div>
+	
+	<div id="_video">
+       <div>${name} <div> ${url} </div> </div>               
+    </div>
+    
+    <div id="_profileWidgets">
+        <h2>profileWidgets</h2>
+        <ul class="profileWidgets">
+             <li><h4>statusQuize:</h4> ${statusQuize.answerdQustions:Qustion}</li>
+             <li><h4>visitedProfile:</h4> ${visitedProfile:friends}</li>
+             <li><h4>secretCrash:</h4> ${secretCrash}</li>
+             <li><h4>profileChat:</h4> ${shoutBox}</li>
+             <li><h4>pics:</h4> ${pics:pic}</li>              
+			 <li><h4>videos:</h4> ${videos:video}</li>              
+        </ul>
+    </div>
+    
+	<div id="_page">
+		%{id}	
+		<div id="%{id}" class="page of">
+			
+			<header class="header">${header:typeTpl}</header>
+			
+			
+			<nav class="nav of">${nav}</nav>
+		
+		%{main}	
+			<section class="main tt">${main:typeTpl}</section>
+		%{main}
+		<!-- if -->	
+		%{sidebar}
+			<div class="sidebar ot">${sidebar:typeTpl}</div>
+		%{sidebar}
+			
+			<footer class="footer cl">${footer:typeTpl}</footer>
+		</div>
+		%{id}	
+	</div>
+
+	<div id="_typeTpl">${{type}}</div>
+		
+	<div id="_nav"><div class="oq">${{type}}</div></div>	
+	
+	<div id="_posts">
+		<div class="">${posts:post}</div>
+		<div class="cl"></div>
+	</div>
+	
+	<div id="_post">
+		<article class="ot">
+			<h2>${title}</h2>
+			<div>${img:image}</div>
+			<p>${text}</p>
+			<div>${auther}</div>
+			<div>${date} ${jsDate}</div>
+		</article>
+	</div>
+	
+	<div id="_heading1">
+		<h1>${text}</h1>
+	</div>	
+	
+	<div id="_jsDate">
+		<p>Seconds: ${this.getSeconds}</p>
+		<p>Minutes: ${this.getMinutes}</p>
+		<p>Hours: ${this.getHours}</p>
+		<p>Year: ${this.getFullYear}</p>
+	</div>	
+	
+	<div id="_heading">
+		<h2>${text}</h2>
+	</div>	
+	
+	<div id="_text_block">
+		<p>${text}</p>
+	</div>
+	
+	<div id="_link">
+		<a href="${url}">${text}</a>
+	</div>
+	
+	<div id="_function">
+		${this.fn}
+	</div>	
+	
+	<div id="_container">
+		<section class="${className}" >${parts:typeTpl}</section>
+	</div>
+	
+	<div id="_image">
+		<img${} src="${src}" alt="${alt}"/>
+	</div>
+
+</script>​
+	<script type="text/javascript" src="tpl.js"></script>
+	<script type="text/javascript" src="tst_tpl.js"></script>
+</body>
+</html>
