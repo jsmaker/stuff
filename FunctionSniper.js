@@ -7,6 +7,10 @@ function wOF() {
 		
 		fn: Wrap,
 		
+		notTrollRegDef: [/^\d+$/],
+		
+		notTrollReg: [],
+		
 		trollRegDef: [/^_?g|set\w/i],
 		
 		trollReg: [],
@@ -36,7 +40,7 @@ function wOF() {
 	WWF.data = fnWrap;
 	
 	fnWrap.addData = function (dataKeeper) {
-	
+		
 		var i = dataKeeper.id;
 		
 		this.calls[i] = dataKeeper.calls;
@@ -83,20 +87,20 @@ function wOF() {
 				calls = (+fnWrap.calls[iOf] + 1) || 0,
 				
 				data = new DataKeeper(propName, originalFn, iOf, calls, elps, arguments, this);
-				
+					
 				fnWrap.addData(data);
-				
+
 				if (elps > 0 && elps < 30) {
 				
-					console.log(data.toString(), arguments, this);
+					console.log([data.toString(), arguments, this]);
 					
 				} else if (elps >= 30) {
 					console.log('********Long Function*********');
-					console.warn(data.toString(), arguments, this);
+					console.warn([data.toString(), arguments, this]);
 					console.log('******************************');
 				
 				}
-				
+
 				return returnValue;
 				
 			} else {
@@ -104,11 +108,14 @@ function wOF() {
 				return  o.fn.apply(this, arguments);
 				
 			}
+		
 			
 		};
 		
+		wrapedFunction.___wrapedFunction___ = true;
+		
 		for (var p in o.fn) {
-			
+
 			wrapedFunction[p] = o.fn[p];
 			
 		}
@@ -143,18 +150,22 @@ function wOF() {
 				
 				tv = typeof v;
 				
-				if (tv === 'function' && !(~WWF.functions.indexOf(v)) && testAllReg(prop)) {
+				if (tv === 'function' && !v.___wrapedFunction___ && !(~WWF.functions.indexOf(v)) && testAllReg(WWF.trollReg,prop) && !testAllReg(WWF.notTrollReg,prop)) {
 					
 					obwrap = {
 						fn : v,
-						obj : obj
+						obj : obj,
+						prop : prop
 					};
-					
-					obj[prop] = Wrap.call(obj, obwrap);
 					
 					WWF.functions.push(v);
 					
 					WWF.functionsPropNames.push(prop);
+					
+					
+					obj[prop] = Wrap.call(obj, obwrap);
+
+
 					
 				} else if (tv === 'object' && count < limit) {
 					
@@ -167,11 +178,11 @@ function wOF() {
 	}
 	
 	
-	function testAllReg(p) {
+	function testAllReg(Regs, p) {
 		
-		for (var i = 0, j = WWF.trollReg.length; i < j; i += 1) {
+		for (var i = 0, j = Regs.length; i < j; i += 1) {
 			
-			if (WWF.trollReg[i].test(p)) {
+			if (Regs[i].test(p)) {
 				
 				return true;
 				
@@ -215,13 +226,14 @@ function wOF() {
 	};
 	
 	
-	var w_O_F = function (obj, trolls, limit) {
+	var w_O_F = function (obj, trolls, excludes, limit) {
 		
 		if (trolls && trolls.length) {
 		
 		}
 	
 		WWF.trollReg = ([].concat(WWF.trollRegDef, trolls));
+		WWF.notTrollReg = ([].concat(WWF.notTrollRegDef, excludes));
 		
 		/* WWF.trollReg.push.apply(WWF.trollReg, trolls); */
 		
